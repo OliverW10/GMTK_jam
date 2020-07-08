@@ -1,2 +1,2 @@
 # GMTK_jam
-Oliver and ethans GMTK game jam submission
+Oliver and Ethan's GMTK game jam submission
