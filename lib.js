@@ -407,12 +407,12 @@ class spriteSheet{
         this.states[statename] = [correspondingLine*this.h-this.h,numofframes];
         this.state = statename;
     }
-    frameCalc(startingframe){
+    frameCalc(startingframe){ // animates through sprites
         this.timer++;
         if (this.timer > this.fps){
             this.timer = 0;
             this.sheetX+=this.w;
-            if(this.sheetX >= this.states[this.state][1]*this.w){
+            if(this.sheetX >= this.states[this.state][1]*this.w){ // loops back around
                 this.sheetX = startingframe*this.w-this.w;
             }
         }
