@@ -97,12 +97,13 @@ class Binder{
 class Poster{
 	constructor(people){
 		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [650, 200, 50, 50]]; //[628, 0, 172, 197] poster size
-		this.people = people.splice(0, 4); // 4 is max
+		this.people = people.filter(per => per.arrestable == true); // 4 is max
 	}
 	draw(){
-		for(var x = 0; x < this.people.length - 1; x++){
-			this.people[x].drawProfile(this.rects[x]);
+		if(this.people.length > 0){
+			for(var x = 0; x < this.people.length - 1; x++){
+				this.people[x].drawProfile(this.rects[x]);
+			}
 		}
-
 	}
 }

@@ -15,6 +15,8 @@ var binder = new Binder(people);
 
 var poster = new Poster(people);
 
+var tutorial = new Tutorial();
+
 var deskImg = new image("assets/monitor.png");
 
 function drawGame(){
@@ -27,6 +29,7 @@ function drawGame(){
             x.drawPerson();
         }
     }
+    tutorial.execute();
 }
 
 function drawMenu(){
