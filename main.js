@@ -3,32 +3,32 @@ var bgalpha = 1;
 var gameState = "game"; // can also be "menu"
 
 var people = [];
+/*
 for(var i = 0; i < 50; i += 1){
 	people.push(new Person());
 }
+*/
+var moniter = new Camera(people);
 
-var moniter = new camera(people);
-
-var binder = new Binder(people);
+//var binder = new Binder(people);
 
 var moniterPos = [30, 20, 800-30, 350]
 
 function drawGame(){
-    drawRect(0,0,w,h,"white",true,"white",bgalpha);
     moniter.draw(moniterPos);
-    binder.draw();
+    //binder.draw();
 }
 
 function drawMenu(){
-	drawRect(0,0,w,h,"white",true,"white",bgalpha);
 	// draws menu;
 }
 
 function draw(){
+	drawRect(0,0,w,h,"white",true,"white",bgalpha);
 	if(gameState == "game"){
 		drawGame();
 	}
-	if(gameState = "menu"){
+	if(gameState == "menu"){
 		drawMenu();
 	}
 }

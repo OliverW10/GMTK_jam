@@ -5,7 +5,8 @@ function getName(bad){
 
 }
 
-var clothesSprites = [[], //hair
+var clothesSprites = [
+[], //hair
 [], // shirt
 [], // pants
 [], // shoes
@@ -19,7 +20,7 @@ class Person{
 		// clothes are stored as indexes for sprites
 		// [hair, head, shirt, pants, shoes]
 		this.clothes = [];
-		for(var i = 0; i < ){
+		for(var i = 0; i < 4; i += 1){
 			clothes.push(round(random(0, clothesSprites.length)));
 		}
 		this.direction = 0; // the direction they are facing
