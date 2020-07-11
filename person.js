@@ -7,20 +7,20 @@ function getName(bad){
 }
 var frametimer = 30;
 var clothesSprites = [
-[new spriteSheet("assets/hair1.png",16,32,5,this.x,this.y,16,32), //hairs
-new spriteSheet("assets/hair2.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/hair3.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/hair4.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/hair5.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/hair6.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/hair7.png",16,32,5,this.x,this.y,16,32),], 
+[new spriteSheet("assets/hair1.png",16,32,frametimer,this.x,this.y,faceW,faceH), //hairs
+new spriteSheet("assets/hair2.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/hair3.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/hair4.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/hair5.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/hair6.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/hair7.png",16,32,frametimer,this.x,this.y,faceW,faceH),], 
 
-[new spriteSheet("assets/head1.png",16,32,5,this.x,this.y,16,32), // heads
-new spriteSheet("assets/head2.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/head3.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/head4.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/head5.png",16,32,5,this.x,this.y,16,32),
-new spriteSheet("assets/head6.png",16,32,5,this.x,this.y,16,32),
+[new spriteSheet("assets/head1.png",16,32,frametimer,this.x,this.y,faceW,faceH), // heads
+new spriteSheet("assets/head2.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/head3.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/head4.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/head5.png",16,32,frametimer,this.x,this.y,faceW,faceH),
+new spriteSheet("assets/head6.png",16,32,frametimer,this.x,this.y,faceW,faceH),
 ],
 [new spriteSheet("assets/shirt1.png",16,32,frametimer,this.x,this.y,faceW,faceH)], // shirt
 [new spriteSheet("assets/pants1.png",16,32,frametimer,this.x,this.y,faceW,faceH)], // pants
