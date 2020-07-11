@@ -8,11 +8,11 @@ for(var i = 0; i < 10; i += 1){
 	people.push(new Person([200, 38, 400, 250]));
 }
 
-var moniter = new Camera(people,);
+var moniter = new Camera();
 
-var binder = new Binder(people.splice(0, 20));
+var binder = new Binder(people);
 
-var poster = new Poster(people.splice(0, 3));
+var poster = new Poster(people);
 
 var deskImg = new image("assets/monitor.png");
 
@@ -21,6 +21,11 @@ function drawGame(){
 	poster.draw([628, 0, 172, 197]);
     moniter.draw([200, 38, 400, 250]);
     binder.draw([250, 350, 300, 225]);
+    for(var x of people){
+        if(moniter.currentLocation == x.room && moniter.state == "inspect"){
+            x.drawPerson();
+        }
+    }
 }
 
 function drawMenu(){
@@ -36,11 +41,21 @@ function draw(){
 		drawMenu();
 	}
 }
+function updateMenu(){
 
-function update(){
-    for(var i = 0; i < people.length; i += 1){
-
+}
+function updateGame(){
+    for(var x of people){
+        x.update();
     }
+}
+function update(){
+    if(gameState == "game"){
+        updateGame();
+    }
+    if(gameState == "menu"){
+		updateMenu();
+	}
 }
 
 function main(){

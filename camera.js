@@ -1,9 +1,8 @@
 class Camera{
-    constructor(people){
+    constructor(){
         this.locations = [[0.45,0.85,0.08,0.15,1],[0.34,0.6,0.3,0.25,2],[0.40,0.35,0.13,0.25,3],[0.64,0.75,0.2,0.15,4],[0.64,0.35,0.1,0.35,5],[0.24,0.65,0.1,0.15,6]];
         this.currentLocation = 1;
         this.state = "overview";
-        this.people = people;
     }
     draw(rect){
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
@@ -27,12 +26,7 @@ class Camera{
             }
             
         }
-        for(var x of this.people){
-            x.update(rect);
-            if(this.state == "inspect" && x.room == this.currentLocation){
-                x.drawPerson();
-            }
-        }
+        
         
     }
 }
