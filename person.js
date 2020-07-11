@@ -7,6 +7,7 @@ function getName(bad){
 
 var clothesSprites = [
 [], //hair
+[], // head
 [], // shirt
 [], // pants
 [], // shoes
@@ -20,14 +21,14 @@ class Person{
 		// clothes are stored as indexes for sprites
 		// [hair, head, shirt, pants, shoes]
 		this.clothes = [];
-		for(var i = 0; i < 4; i += 1){
-			clothes.push(round(random(0, clothesSprites.length)));
+		for(var i = 0; i < clothesSprites.length; i += 1){
+			this.clothes.push(round(random(0, clothesSprites.length)));
 		}
 		this.direction = 0; // the direction they are facing
 	}
 	drawProfile(){ // draws the profile picture for binder
 		for(var i = 0; i < this.clothes.length; i += 1){
-			this.clothes.draw()
+			clothesSprites[this.clothes].draw()
 		}
 	}
 	drawPerson(rect){

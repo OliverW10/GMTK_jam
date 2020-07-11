@@ -3,20 +3,18 @@ var bgalpha = 1;
 var gameState = "game"; // can also be "menu"
 
 var people = [];
-/*
+
 for(var i = 0; i < 50; i += 1){
 	people.push(new Person());
 }
-*/
+
 var moniter = new Camera(people);
 
-//var binder = new Binder(people);
-
-var moniterPos = [30, 20, 800-30, 350]
+var binder = new Binder(people);
 
 function drawGame(){
-    moniter.draw(moniterPos);
-    //binder.draw();
+    moniter.draw([30, 20, 800-60, 350]);
+    binder.draw([400, 390, Math.cos(mouse.x/600)*150, 400]);
 }
 
 function drawMenu(){

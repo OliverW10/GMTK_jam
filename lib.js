@@ -11,7 +11,7 @@ h *= 0.95
 var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 h *= 0.95;
 w *= 0.95;
-var scale = h/600
+var scale = 1
 var c = canvas.getContext("2d"); //c means context
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -63,7 +63,6 @@ var pressedAnyKey = false;
 document.addEventListener('keydown', function(event) {
 		current_key = event.code;
 		keys[current_key] = true;
-		console.log(keys);
 		pressedAnyKey = true;
 	}
 );
