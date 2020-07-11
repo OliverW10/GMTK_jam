@@ -95,3 +95,15 @@ class Binder{
 		c.lineWidth = 1;
 	}
 }
+
+class Poster{
+	constructor(people){
+		this.rects = [[]];
+		this.people = people;
+	}
+	draw(){
+		for(x of this.people){
+			//x.drawProfile(...this.rects[this.people.indexOf(x)]);
+		}
+	}
+}

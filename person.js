@@ -7,13 +7,20 @@ function getName(bad){
 }
 var frametimer = 30;
 var clothesSprites = [
-[new spriteSheet("assets/hair1.png",16,32,frametimer,this.x,this.y,faceW,faceH), //hairs
-new spriteSheet("assets/hair2.png",16,32,frametimer,this.x,this.y,faceW,faceH),
-new spriteSheet("assets/hair3.png",16,32,frametimer,this.x,this.y,faceW,faceH),
-new spriteSheet("assets/hair4.png",16,32,frametimer,this.x,this.y,faceW,faceH),
-new spriteSheet("assets/hair5.png",16,32,frametimer,this.x,this.y,faceW,faceH)], 
+[new spriteSheet("assets/hair1.png",16,32,5,this.x,this.y,16,32), //hairs
+new spriteSheet("assets/hair2.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair3.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair4.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair5.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair6.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair7.png",16,32,5,this.x,this.y,16,32),], 
 
-[new spriteSheet("assets/head1.png",16,32,frametimer,this.x,this.y,faceW,faceH), // heads
+[new spriteSheet("assets/head1.png",16,32,5,this.x,this.y,16,32), // heads
+new spriteSheet("assets/head2.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/head3.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/head4.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/head5.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/head6.png",16,32,5,this.x,this.y,16,32),
 ],
 [new spriteSheet("assets/shirt1.png",16,32,frametimer,this.x,this.y,faceW,faceH)], // shirt
 [new spriteSheet("assets/pants1.png",16,32,frametimer,this.x,this.y,faceW,faceH)], // pants
@@ -26,9 +33,9 @@ for(var x of clothesSprites){
 }
 
 var profileSprites = [
-new spriteSheet("assets/hair.png",16,16,0,0,0,64,64), // hair
-new spriteSheet("assets/heads.png", 16, 16, 0, 0, 0, 64, 64), //head
-new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 64, 64)
+new spriteSheet("assets/hairs.png",16,16,0,0,0,48,48), // hair
+new spriteSheet("assets/heads.png", 16, 16, 0, 0, 0, 48, 48), //head
+new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 48, 48)
 ]
 for(var x of profileSprites){
 	x.addState("face", 1, 6)
@@ -56,21 +63,19 @@ class Person{
 			this.clothesNums.push(Math.floor(random(0, clothesSprites[i].length)))
 			this.clothes.push(clothesSprites[i][this.clothesNums[i]]);
 		}
+		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
 	}
 	drawProfile(rect){ // draws the profile picture for binder
-		c.beginPath()
-		c.fillStyle = "rgb(255, 0, 0)";
-		c.fillRect(...rect);
 
 		//head
-		profileSprites[1].sheetX = profileSprites[0].w*round(random(0, 3)); 
+		profileSprites[1].sheetX = profileSprites[0].w*this.clothesNums[1]; 
 		profileSprites[1].x = rect[0];
 		profileSprites[1].y = rect[1];
 		profileSprites[1].draw();
 
 		// face
-		profileSprites[2].sheetX = 0//profileSprites[0].w*this.clothesNums[0];
+		profileSprites[2].sheetX = profileSprites[0].w*this.face
 		profileSprites[2].x = rect[0];
 		profileSprites[2].y = rect[1];
 		profileSprites[2].draw();

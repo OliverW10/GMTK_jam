@@ -10,12 +10,15 @@ for(var i = 0; i < 10; i += 1){
 
 var moniter = new Camera(people,);
 
-var binder = new Binder(people);
+var binder = new Binder(people.splice(0, 20));
+
+var poster = new Poster(people.splice(0, 3));
 
 var deskImg = new image("assets/monitor.png");
 
 function drawGame(){
-	deskImg.drawImg(0, 0, 800, 600)
+	deskImg.drawImg(0, 0, 800, 600);
+	poster.draw([628, 0, 172, 197]);
     moniter.draw([200, 38, 400, 250]);
     binder.draw([250, 350, 300, 225]);
 }
