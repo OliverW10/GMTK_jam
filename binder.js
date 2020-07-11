@@ -100,7 +100,7 @@ class Poster{
 		this.people = people.splice(0, 4); // 4 is max
 	}
 	draw(){
-		for(var x = 0; x < this.rects.length - 1; x++){
+		for(var x = 0; x < this.people.length - 1; x++){
 			this.people[x].drawProfile(this.rects[x]);
 		}
 

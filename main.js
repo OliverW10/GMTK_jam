@@ -1,10 +1,11 @@
 var bgalpha = 1;
+var day = 1;
 
 var gameState = "game"; // can also be "menu"
 
 var people = [];
 
-for(var i = 0; i < 10; i += 1){
+for(var i = 0; i < 25; i += 1){
 	people.push(new Person([200, 38, 400, 250]));
 }
 

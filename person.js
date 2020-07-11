@@ -16,14 +16,23 @@ new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 48, 48)
 profileSprites[0].addState("idle",1,8)
 profileSprites[1].addState("idle",1,8)
 profileSprites[2].addState("idle",1,3)
-var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room] x,y,w,h and tpx,tpy are as a percentage of the monitor rect
+var restrictedRooms = {
+	1:false,
+	2:false,
+	3:false,
+	4:false,
+	5:false,
+	6:true
+}
+var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h and tpx,tpy are as a percentage of the monitor rect
 	[0.45,0,0.1,0.05,2,0.5,0.7,1],
 	[0.45,0.95,0.1,0.05,1,0.5,0.1,2],
 	[0,0.45,0.05,0.1,6,0.75,0.45,2],
-
+	[0.95,0.45,0.05,0.1,2,0,0.45,6]
 ]
 class Person{
 	constructor(rect){
+		this.arrestable = false;
 		this.room = 1;
 		this.w = faceW;
 		this.h = faceH;
@@ -108,12 +117,19 @@ class Person{
 				var temp = [];
 				for(var x of doors){
 					if(x[7] == this.room){
-						temp.push([this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],x[4],x[5],x[6],x[7]]);
+						temp.push([this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],x[4],x[5],x[6],x[7],x[8]]);
 					}
 				}
 				if(temp.length > 0){
-					this.target = temp[Math.round(random(0,temp.length-1))];
-					this.touchindoor = true;
+					var w = temp[Math.round(random(0,temp.length-1))];
+					console.log(w[4])
+					if(restrictedRooms[w[4]] == false || day > 2){
+						this.target = w;
+						this.touchindoor = true;
+					}else{
+						this.touchindoor = false;
+						this.target = [random(this.rect[0],this.rect[0]+this.rect[2]-this.w),random(this.rect[1],this.rect[1]+this.rect[3]-this.h)];
+					}
 				}else{
 					this.touchindoor = false;
 					this.target = [random(this.rect[0],this.rect[0]+this.rect[2]-this.w),random(this.rect[1],this.rect[1]+this.rect[3]-this.h)];
