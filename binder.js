@@ -43,7 +43,9 @@ class Binder{
 		drawRect(rect[0]+rect[2]/2, rect[1], rect[2]/2, rect[3]*1.1,"black",true,"white",1)
 
 		this.pages[Math.floor(this.page)].draw([rect[0], rect[1], rect[2]/2, rect[3]]);
-		this.pages[Math.floor(this.page)].draw([rect[0]+rect[2]/2, rect[1], rect[2]/2, rect[3]]);
+		if(this.page+1 < this.pages.length){
+			this.pages[Math.floor(this.page)+1].draw([rect[0]+rect[2]/2, rect[1], rect[2]/2, rect[3]]);
+		}
 
 		// buttons
 		if(this.buttonPressed[0] === true && mouse.button.left === false){

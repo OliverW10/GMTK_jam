@@ -1,22 +1,37 @@
 
-var firstNames = [];
-var lastNames = [];
+var firstNames = ["Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter"];
+var lastNames = ["Anderson", "Ashwoon", "Aikin", "Bateman", "Bongard", "Bowers", "Boyd", "Cannon", "Cast", "Deitz", "Dewalt", "Ebner", "Frick", "Hancock", "Haworth", "Hesch", "Hoffman", "Kassing", "Knutson", "Lawless", "Lawicki", "Mccord", "McCormack", "Miller", "Myers", "Nugent", "Ortiz", "Orwig", "Ory", "Paiser", "Pak", "Pettigrew", "Quinn", "Quizoz", "Ramachandran", "Resnick", "Sagar", "Schickowski", "Schiebel", "Sellon", "Severson", "Shaffer", "Solberg", "Soloman", "Sonderling", "Soukup", "Soulis", "Stahl", "Sweeney", "Tandy", "Trebil", "Trusela", "Trussel", "Turco", "Uddin", "Uflan", "Ulrich", "Upson", "Vader", "Vail", "Valente", "Van Zandt", "Vanderpoel", "Ventotla", "Vogal", "Wagle", "Wagner", "Wakefield", "Weinstein", "Weiss", "Woo", "Yang", "Yates", "Yocum", "Zeaser", "Zeller", "Ziegler", "Bauer", "Baxster", "Casal", "Cataldi", "Caswell", "Celedon", "Chambers", "Chapman", "Christensen", "Darnell", "Davidson", "Davis", "DeLorenzo", "Dinkins", "Doran", "Dugelman", "Dugan", "Duffman", "Eastman", "Ferro", "Ferry", "Fletcher", "Fietzer", "Hylan", "Hydinger", "Illingsworth", "Ingram", "Irwin", "Jagtap", "Jenson", "Johnson", "Johnsen", "Jones", "Jurgenson", "Kalleg", "Kaskel", "Keller", "Leisinger", "LePage", "Lewis", "Linde", "Lulloff", "Maki", "Martin", "McGinnis", "Mills", "Moody", "Moore", "Napier", "Nelson", "Norquist", "Nuttle", "Olson", "Ostrander", "Reamer", "Reardon", "Reyes", "Rice", "Ripka", "Roberts", "Rogers", "Root", "Sandstrom", "Sawyer", "Schlicht", "Schmitt", "Schwager", "Schutz", "Schuster", "Tapia", "Thompson", "Tiernan", "Tisler"];
 function getName(bad){
-
+	return firstNames[Math.floor(random(0, firstNames.length))] + " " + lastNames[Math.floor(random(0, lastNames.length))]
 }
 
 var clothesSprites = [
-[new spriteSheet("assets/hair1.png",16,32,5,this.x,this.y,16,32)], //hair
-[new spriteSheet("assets/head1.png",16,32,5,this.x,this.y,16,32)], // head
+[new spriteSheet("assets/hair1.png",16,32,5,this.x,this.y,16,32), //hairs
+new spriteSheet("assets/hair2.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair3.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair4.png",16,32,5,this.x,this.y,16,32),
+new spriteSheet("assets/hair5.png",16,32,5,this.x,this.y,16,32)], 
+
+[new spriteSheet("assets/head1.png",16,32,5,this.x,this.y,16,32), // heads
+],
 [new spriteSheet("assets/shirt1.png",16,32,5,this.x,this.y,16,32)], // shirt
 [new spriteSheet("assets/pants1.png",16,32,5,this.x,this.y,16,32)], // pants
 ]
+for(var x of clothesSprites){
+	for(var z of x){
+		z.addState("right",1,8);
+		z.addState("left",2,8);
+	}
+}
 
 var profileSprites = [
-new spriteSheet("assets/hair.png",16,16,0,0,0,16,16), // hair
-new spriteSheet("assets/heads.png", 16, 16, 0, 0, 0, 16, 16) //head
+new spriteSheet("assets/hair.png",16,16,0,0,0,64,64), // hair
+new spriteSheet("assets/heads.png", 16, 16, 0, 0, 0, 64, 64), //head
+new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 64, 64)
 ]
-
+for(var x of profileSprites){
+	x.addState("face", 1, 6)
+}
 class Person{
 	constructor(rect,bad){
 		this.room = 1;
@@ -38,23 +53,30 @@ class Person{
 			this.clothesNums.push(Math.floor(random(0, clothesSprites[i].length)))
 			this.clothes.push(clothesSprites[i][this.clothesNums[i]]);
 		}
-		for(var x of this.clothes){
-			x.addState("right",1,8);
-			x.addState("left",2,8);
-		}
-		//for(var i = 0; i < clothesSprites.length; i += 1){
-		//	this.clothes.push(round(random(0, clothesSprites.length)));
-		//}
 		this.direction = -1; // the direction they are facing
 	}
 	drawProfile(rect){ // draws the profile picture for binder
+		c.beginPath()
+		c.fillStyle = "rgb(255, 0, 0)";
+		c.fillRect(...rect);
+
+		//head
+		profileSprites[1].sheetX = profileSprites[0].w*round(random(0, 3)); 
+		profileSprites[1].x = rect[0];
+		profileSprites[1].y = rect[1];
+		profileSprites[1].draw();
+
+		// face
+		profileSprites[2].sheetX = 0//profileSprites[0].w*this.clothesNums[0];
+		profileSprites[2].x = rect[0];
+		profileSprites[2].y = rect[1];
+		profileSprites[2].draw();
+
+		// hair
 		profileSprites[0].sheetX = profileSprites[0].w*this.clothesNums[0];
 		profileSprites[0].x = rect[0];
+		profileSprites[0].y = rect[1];
 		profileSprites[0].draw();
-
-		profileSprites[1].sheetX = profileSprites[1].w*this.clothesNums[1];
-		profileSprites[1].x = rect[0];
-		profileSprites[1].draw();
 	}
 	drawPerson(){
 		for(var x of this.clothes){
