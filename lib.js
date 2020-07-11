@@ -90,14 +90,14 @@ function collidePoint(point, rect){
 	}
 }
 
-function collideRect(rect1, rect2){
-	if(rect1[0] > rect2[0] + rect2[2] || rect1[0] + rect1[2] < rect2[0] || rect1[1] > rect2[1] + rect2[3] || rect1[1] - rect1[3] < rect2[1]){
-		return false;
-	}else{
-		return true;
-	}
+function AABBCollision(x1,y1,w1,h1,x2,y2,w2,h2){
+    if (x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2){
+        return true;
+    }else{
+        return false;
+    }
+        
 }
-
 function blendCols(col1, col2, per){
 	var R = col1[0] + (col2[0] - col1[0])*per;
 	var G = col1[1] + (col2[1] - col1[1])*per;
