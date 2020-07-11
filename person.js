@@ -40,7 +40,7 @@ class Person{
 		this.clothesNums = [] // stores indexes for clothes
 		this.numOfHairSprites = 7;
 		this.numOfHeadSprites = 6;
-		this.numOfShirtSprites = 1;
+		this.numOfShirtSprites = 3;
 		this.numOfPantsSprites = 1;
 		this.hairPick = Math.round(random(1,this.numOfHairSprites));
 		this.headPick = Math.round(random(1,this.numOfHeadSprites));

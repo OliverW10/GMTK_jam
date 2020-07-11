@@ -26,7 +26,6 @@ class Camera{
             }
             
         }
-        
-        
+        drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"rgba(50, 50, 200, 0.3)",1);
     }
 }

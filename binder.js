@@ -35,8 +35,8 @@ class Binder{
 	}
 	draw(rect){
 		c.lineWidth = 1;
-		drawRect(rect[0], rect[1], rect[2]/2, rect[3]*1.1,"black",true,"white",1);
-		drawRect(rect[0]+rect[2]/2, rect[1], rect[2]/2, rect[3]*1.1,"black",true,"white",1)
+		drawRect(rect[0], rect[1], rect[2]/2, rect[3]*1.1,"black",true,"rgb(200, 200, 200)",1);
+		drawRect(rect[0]+rect[2]/2, rect[1], rect[2]/2, rect[3]*1.1,"black",true,"rgb(200, 200, 200)",1)
 
 		this.pages[Math.floor(this.page)].draw([rect[0], rect[1], rect[2]/2, rect[3]]);
 		if(this.page+1 < this.pages.length){
@@ -89,13 +89,15 @@ class Binder{
 		showText(`Page: ${this.page}`, rect[0]+rect[2]*0.1, rect[1]+rect[3]*0.05, 10);
 		showText(`Page: ${this.page+1}`, rect[0]+rect[2]*0.9, rect[1]+rect[3]*0.05, 10);
 		c.lineWidth = 1;
+
+		drawRect(rect[0], rect[1], rect[2], rect[3]*1.1,"black",true,"rgba(50, 50, 200, 0.2)",1);
 	}
 }
 
 class Poster{
 	constructor(people){
-		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [700, 220, 50, 50]]; //[628, 0, 172, 197] poster size
-		this.people = people;
+		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [650, 200, 50, 50]]; //[628, 0, 172, 197] poster size
+		this.people = people.splice(0, 4); // 4 is max
 	}
 	draw(){
 		for(var x = 0; x < this.people.length - 1; x++){
