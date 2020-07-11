@@ -92,5 +92,6 @@ class Binder{
 
 		showText(`Page: ${this.page}`, rect[0]+rect[2]*0.1, rect[1]+rect[3]*0.05, 10);
 		showText(`Page: ${this.page+1}`, rect[0]+rect[2]*0.9, rect[1]+rect[3]*0.05, 10);
+		c.lineWidth = 1;
 	}
 }

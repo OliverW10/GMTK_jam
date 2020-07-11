@@ -4,7 +4,7 @@ var gameState = "game"; // can also be "menu"
 
 var people = [];
 
-for(var i = 0; i < 50; i += 1){
+for(var i = 0; i < 10; i += 1){
 	people.push(new Person([200, 38, 400, 250]));
 }
 
