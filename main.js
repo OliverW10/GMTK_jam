@@ -5,18 +5,18 @@ var gameState = "game"; // can also be "menu"
 var people = [];
 
 for(var i = 0; i < 50; i += 1){
-	people.push(new Person());
+	people.push(new Person([200, 38, 400, 250]));
 }
 
-var moniter = new Camera(people);
+var moniter = new Camera(people,);
 
 var binder = new Binder(people);
 
-var deskImg = new image("assets/desk.jpg");
+var deskImg = new image("assets/monitor.png");
 
 function drawGame(){
 	deskImg.drawImg(0, 0, 800, 600)
-    moniter.draw([150, 45, 400, 250]);
+    moniter.draw([200, 38, 400, 250]);
     binder.draw([250, 350, 300, 225]);
 }
 

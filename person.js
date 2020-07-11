@@ -14,10 +14,10 @@ var clothesSprites = [
 ]
 
 class Person{
-	constructor(bad){
+	constructor(rect,bad){
 		this.room = 1;
-		this.x = 0;
-		this.y = 0;
+		this.x = random(rect[0],rect[0]+rect[2]-16);
+		this.y = random(rect[1],rect[1]+rect[3]-32);
 		this.timer = 0;
 		this.target = [];
 		this.badGuy = bad;
@@ -39,9 +39,7 @@ class Person{
 		this.direction = -1; // the direction they are facing
 	}
 	drawProfile(){ // draws the profile picture for binder
-		for(var i = 0; i < this.clothes.length; i += 1){
-			clothesSprites[this.clothes].draw()
-		}
+		
 	}
 	drawPerson(){
 		for(var x of this.clothes){
@@ -58,8 +56,8 @@ class Person{
 	}
 	update(rect){
 		if(this.timer <= 0){
-			this.timer = 300+random(0,300);
-			this.target = [random(rect[0],rect[0]+rect[2]),random(rect[1],rect[1]+rect[3])];
+			this.timer = random(100,400);
+			this.target = [random(rect[0],rect[0]+rect[2]-16),random(rect[1],rect[1]+rect[3]-32)];
 		}else{
 			var rads = Math.atan2(this.target[1]-this.y,this.target[0]-this.x);
 			if(!AABBCollision(this.x,this.y,16,32,this.target[0],this.target[1],16,16)){

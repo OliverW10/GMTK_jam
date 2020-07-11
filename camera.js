@@ -6,7 +6,7 @@ class Camera{
         this.people = people;
     }
     draw(rect){
-        drawRect(rect[0],rect[1],rect[2],rect[3],"black",0,"",1);
+        drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
         if(this.state == "overview"){
             for(var x of this.locations){
                 var temp = [rect[0]+rect[2]*x[0],rect[1]+rect[3]*x[1],rect[2]*x[2],rect[3]*x[3]];
