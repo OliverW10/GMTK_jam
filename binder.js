@@ -98,8 +98,9 @@ class Poster{
 		this.people = people;
 	}
 	draw(){
-		for(x of this.people){
-			x.drawProfile(this.rects[this.people.indexOf(x)]);
+		for(var x = 0; x < this.people.length - 1; x++){
+			this.people[x].drawProfile(this.rects[x]);
 		}
+
 	}
 }
