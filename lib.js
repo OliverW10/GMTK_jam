@@ -7,10 +7,9 @@ var canvas = document.getElementById("main");
 canvas.setAttribute('draggable', false);
 var entirePage = document.getElementById("wholePage");
 var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-h *= 0.95
 var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-h *= 0.95;
-w *= 0.95;
+//h *= 0.95;
+//w *= 0.95;
 var scale = 1
 var c = canvas.getContext("2d"); //c means context
 document.addEventListener('contextmenu', event => event.preventDefault());

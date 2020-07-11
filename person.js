@@ -21,35 +21,68 @@ class Person{
 		this.timer = 0;
 		this.target = [];
 		this.badGuy = bad;
-		this.speed = 2;
+		this.speed = 1;
 		this.name = getName(this.badGuy);
-
+		this.idle = false;
 		// clothes are stored as indexes for sprites
 		// [hair, head, shirt, pants, shoes]
-		this.clothes = [];
-		for(var i = 0; i < clothesSprites.length; i += 1){
-			this.clothes.push(round(random(0, clothesSprites.length)));
+		//heads are 16x16
+		//pants and body are 16x32
+		this.clothes = [new spriteSheet("assets/head1.png",16,32,5,this.x,this.y,16,32),new spriteSheet("assets/shirt1.png",16,32,5,this.x,this.y,16,32),new spriteSheet("assets/pants1.png",16,32,5,this.x,this.y,16,32)];
+		for(var x of this.clothes){
+			x.addState("right",1,8);
+			x.addState("left",2,8);
 		}
-		this.direction = 0; // the direction they are facing
+		//for(var i = 0; i < clothesSprites.length; i += 1){
+		//	this.clothes.push(round(random(0, clothesSprites.length)));
+		//}
+		this.direction = -1; // the direction they are facing
 	}
 	drawProfile(){ // draws the profile picture for binder
 		for(var i = 0; i < this.clothes.length; i += 1){
 			clothesSprites[this.clothes].draw()
 		}
 	}
-	drawPerson(rect){
-		for(var i = 0; i < this.clothes.length; i += 1){
-			this.clothes.draw()
+	drawPerson(){
+		for(var x of this.clothes){
+			x.x = this.x;
+			x.y = this.y;
+			x.draw();
+			if(this.idle){
+				x.sheetX = 16 * 3;
+			}else{
+				x.frameCalc(1);
+			}
+			
 		}
 	}
 	update(rect){
 		if(this.timer <= 0){
 			this.timer = 300+random(0,300);
-			this.target = [random(rect[0],rect[0]+rect[1]),random(rect[1],+rect[1]+rect[2])];
+			this.target = [random(rect[0],rect[0]+rect[2]),random(rect[1],rect[1]+rect[3])];
 		}else{
 			var rads = Math.atan2(this.target[1]-this.y,this.target[0]-this.x);
-			this.x += Math.cos(rads)*this.speed;
-			this.y += Math.sin(rads)*this.speed;
+			if(!AABBCollision(this.x,this.y,16,32,this.target[0],this.target[1],16,16)){
+				if(Math.cos(rads)*this.speed <= 0){
+				}
+				this.x += Math.cos(rads)*this.speed;
+				this.y += Math.sin(rads)*this.speed;
+				this.idle = false;
+			}else{
+				this.idle = true;
+			}
+			
+			if(Math.cos(rads)*this.speed <= 0){
+				this.direction = -1;
+				for(var x of this.clothes){
+					x.state = "right";
+				}
+			}else{
+				this.direction = 1;
+				for(var x of this.clothes){
+					x.state = "left";
+				}
+			}
 		}
 
 		this.timer -= 1;
