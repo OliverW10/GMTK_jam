@@ -78,26 +78,29 @@ class Person{
 		}
 		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
+
 		this.rect = rect;
+
+		this.faceOffset = [-24, -24]
 	}
 	drawProfile(rect){ // draws the profile picture for binder
 
 		//head
 		profileSprites[1].sheetX = profileSprites[0].w*this.clothesNums[1]; 
-		profileSprites[1].x = rect[0];
-		profileSprites[1].y = rect[1];
+		profileSprites[1].x = rect[0] + this.faceOffset[0];
+		profileSprites[1].y = rect[1] + this.faceOffset[1];
 		profileSprites[1].draw();
 
 		// face
 		profileSprites[2].sheetX = profileSprites[0].w*this.face
-		profileSprites[2].x = rect[0];
-		profileSprites[2].y = rect[1];
+		profileSprites[2].x = rect[0] + this.faceOffset[0];
+		profileSprites[2].y = rect[1] + this.faceOffset[1];
 		profileSprites[2].draw();
 
 		// hair
 		profileSprites[0].sheetX = profileSprites[0].w*this.clothesNums[0];
-		profileSprites[0].x = rect[0];
-		profileSprites[0].y = rect[1];
+		profileSprites[0].x = rect[0] + this.faceOffset[0];
+		profileSprites[0].y = rect[1] + this.faceOffset[1];
 		profileSprites[0].draw();
 	}
 	drawPerson(){

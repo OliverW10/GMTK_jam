@@ -18,8 +18,8 @@ var deskImg = new image("assets/monitor.png");
 
 function drawGame(){
 	deskImg.drawImg(0, 0, 800, 600);
-	poster.draw([628, 0, 172, 197]);
     moniter.draw([200, 38, 400, 250]);
+    poster.draw();
     binder.draw([250, 350, 300, 225]);
     for(var x of people){
         if(moniter.currentLocation == x.room && moniter.state == "inspect"){

@@ -9,18 +9,14 @@ class Page{
 		}
 	}
 	draw(rect){
-		// c.beginPath();
-		// c.strokeStyle = "black";
-		// c.rect(...rect);
-		// c.stroke();
 		for(var i = 0; i < this.people.length; i += 1){
 			c.beginPath();
 			c.fillStyle = "rgb(50, 50, 150)";
 			// also uses personRect to draw all the features
 			var personRect = [rect[0] + rect[2]*this.peoplePos[i][0], rect[1] + rect[3]*this.peoplePos[i][1], rect[2]*this.peoplePos[i][2], rect[3]*this.peoplePos[i][2]]; // pfp size is based on on height of rect
 			c.fillRect(...personRect);
-			this.people[i].drawProfile(personRect);
-			showText(this.people[i].name, personRect[0]+personRect[2]*2, personRect[1]+personRect[3]*0.2, personRect[2]*0.5);
+			this.people[i].drawProfile([personRect[0]+personRect[2]/2, personRect[1]+personRect[3]/2, personRect[2], personRect[3]]);
+			showText(this.people[i].name, personRect[0]+personRect[2]*3, personRect[1]+personRect[3]*0.5, personRect[2]*0.5);
 		}
 	}
 }
@@ -98,12 +94,12 @@ class Binder{
 
 class Poster{
 	constructor(people){
-		this.rects = [[]];
+		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [700, 220, 50, 50]]; //[628, 0, 172, 197] poster size
 		this.people = people;
 	}
 	draw(){
 		for(x of this.people){
-			//x.drawProfile(...this.rects[this.people.indexOf(x)]);
+			x.drawProfile(this.rects[this.people.indexOf(x)]);
 		}
 	}
 }
