@@ -19,7 +19,7 @@ class Page{
 			// also uses personRect to draw all the features
 			var personRect = [rect[0] + rect[2]*this.peoplePos[i][0], rect[1] + rect[3]*this.peoplePos[i][1], rect[2]*this.peoplePos[i][2], rect[3]*this.peoplePos[i][2]]; // pfp size is based on on height of rect
 			c.fillRect(...personRect);
-			//this.people[i].drawProfile(personRect);
+			this.people[i].drawProfile(personRect);
 			showText(this.people[i].name, personRect[0]+personRect[2]*2, personRect[1]+personRect[3]*0.2, personRect[2]*0.5);
 		}
 	}
