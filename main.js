@@ -12,9 +12,12 @@ var moniter = new Camera(people);
 
 var binder = new Binder(people);
 
+var deskImg = new image("assets/desk.jpg");
+
 function drawGame(){
-    moniter.draw([30, 20, 800-60, 350]);
-    binder.draw([400, 390, Math.cos(mouse.x/600)*150, 400]);
+	deskImg.drawImg(0, 0, 800, 600)
+    moniter.draw([150, 45, 400, 250]);
+    binder.draw([250, 350, 300, 225]);
 }
 
 function drawMenu(){
