@@ -29,7 +29,9 @@ class Person{
 			this.clothes.draw()
 		}
 	}
-	drawPerson(){
-
+	drawPerson(rect){
+		for(var i = 0; i < this.clothes.length; i += 1){
+			this.clothes.draw()
+		}
 	}
 }
