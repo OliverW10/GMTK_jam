@@ -16,12 +16,12 @@ new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 48, 48)
 profileSprites[0].addState("idle",1,8)
 profileSprites[1].addState("idle",1,8)
 profileSprites[2].addState("idle",1,3)
-var doors = {
-	1:[0.45,0,0.1,0.05,2,0.5,0.7],
-	2:[0.45,0.95,0.1,0.05,1,0.5,0.1],
-	2:[0,0.45,0.05,0.1,6,0.75,0.45],
+var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room] x,y,w,h and tpx,tpy are as a percentage of the monitor rect
+	[0.45,0,0.1,0.05,2,0.5,0.7,1],
+	[0.45,0.95,0.1,0.05,1,0.5,0.1,2],
+	[0,0.45,0.05,0.1,6,0.75,0.45,2],
 
-}
+]
 class Person{
 	constructor(rect){
 		this.room = 1;
@@ -66,7 +66,6 @@ class Person{
 		this.touchindoor = false;
 	}
 	drawProfile(rect){ // draws the profile picture for binder
-
 		//head
 		profileSprites[1].sheetX = 16*this.headPick-16; 
 		profileSprites[1].x = rect[0];
@@ -93,9 +92,9 @@ class Person{
 			x.draw(1);
 			//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 		}
-		for(var x in doors){
-			if(x==moniter.currentLocation){
-				drawRect(this.rect[0]+this.rect[2]*doors[x][0],this.rect[1]+this.rect[3]*doors[x][1],doors[x][2]*this.rect[2],this.rect[3]*doors[x][3],"red",0,"",1);		
+		for(var x of doors){
+			if(x[7]==moniter.currentLocation){
+				drawRect(this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],"red",0,"",1);		
 			}
 		}
 		showText(Math.round(this.timer),this.x,this.y,10);
@@ -107,9 +106,9 @@ class Person{
 			this.timer = random(100,400);
 			if(Math.random() > 0.9){
 				var temp = [];
-				for(var x in doors){
-					if(x == this.room){
-						temp.push([this.rect[0]+this.rect[2]*doors[x][0],this.rect[1]+this.rect[3]*doors[x][1],doors[x][2]*this.rect[2],this.rect[3]*doors[x][3],doors[x][4],doors[x][5],doors[x][6]]);
+				for(var x of doors){
+					if(x[7] == this.room){
+						temp.push([this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],x[4],x[5],x[6],x[7]]);
 					}
 				}
 				if(temp.length > 0){
@@ -123,6 +122,7 @@ class Person{
 			}else{
 				this.touchindoor = false;
 				this.target = [random(this.rect[0],this.rect[0]+this.rect[2]-this.w),random(this.rect[1],this.rect[1]+this.rect[3]-this.h)];
+				
 			}
 		}else{
 			var rads = Math.atan2(this.target[1]-this.y,this.target[0]-this.x);
@@ -134,6 +134,7 @@ class Person{
 					this.touchindoor = false;
 					this.x = this.rect[0]+this.rect[2]*this.target[5];
 					this.y = this.rect[1]+this.rect[3]*this.target[6];
+					console.log(this.x,this.y)
 				}
 			}else{
 				this.x += Math.cos(rads)*this.speed;
