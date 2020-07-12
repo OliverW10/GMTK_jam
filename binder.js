@@ -98,34 +98,14 @@ class Poster{
 	constructor(people){
 		this.rects = [[625, 25, 50, 50], [625, 75, 50, 50], [625, 125, 50, 50], [625, 175, 50, 50]]; //[628, 0, 172, 197] poster size
 		this.people = people.filter(per => per.arrestable == true).slice(0, 3) // 3 is max
-		this.infoBoxAlpha = createArray(0, this.people.length);
+		this.infoBoxAlpha = createArray(0, this.people.length); // tranparency of each of the description boxes
 	}
 	draw(){
 		if(this.people.length > 0){
+			showText(`Hover for description`, 720, 35, 10);
 			for(var x = 0; x < this.people.length; x++){
 				this.people[x].drawProfile([this.rects[x][0]+this.rects[x][2]/2, this.rects[x][1]+this.rects[x][3]/2]);
-				showText(`${this.people[x].name}`, this.rects[x][0]+100, this.rects[x][1]+20, 10);
-				showText(`Hover for description`, this.rects[x][0]+100, this.rects[x][1]+35, 10);
-				// c.beginPath();
-				// c.fillStyle = "red";
-				// c.fillRect(...this.rects[x]);
-
-				if(collidePoint([mouse.x, mouse.y], this.rects[x]) === true && this.infoBoxAlpha[x] <= 1){
-					this.infoBoxAlpha[x] += 0.01;
-				}else if(this.infoBoxAlpha[x] > 0){
-					this.infoBoxAlpha[x] -= 0.01;
-				}
-
-				if(this.infoBoxAlpha[x] > 0.05){
-					c.beginPath();
-					c.fillStyle = `rgba(255, 255, 255, ${this.infoBoxAlpha[x]})`;
-					c.fillRect(523, this.rects[x][1], 100, 50);
-
-					showText(this.people[x].hairName, 590, this.rects[x][1]+10, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
-					showText(this.people[x].headName, 590, this.rects[x][1]+20, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
-					showText(this.people[x].shirtName, 590, this.rects[x][1]+30, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
-					showText(this.people[x].pantsName, 590, this.rects[x][1]+40, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
-				}
+				showText(`${this.people[x].name}`, this.rects[x][0]+100, this.rects[x][1]+30, 15);
 			}
 		}
 	}

@@ -102,29 +102,48 @@ class Person{
 		this.direction = -1; // the direction they are facing
 		this.rot = 0;
 
-		this.faceOffset = [-24, -24]
+		this.faceOffset = [24, 24]
 		this.touchindoor = false;
 		this.trapdooring = false;
 		this.hhh = false;
+
+		this.descBoxAlpha = 0;
 	}
 	drawProfile(pos){ // draws the profile picture for binder
 		//head
 		profileSprites[1].sheetX = 16*this.headPick-16; 
-		profileSprites[1].x = pos[0] + this.faceOffset[0];
-		profileSprites[1].y = pos[1] + this.faceOffset[1];
+		profileSprites[1].x = pos[0] - this.faceOffset[0];
+		profileSprites[1].y = pos[1] - this.faceOffset[1];
 		profileSprites[1].draw();
 
 		// face
 		profileSprites[2].sheetX = profileSprites[0].w*this.face
-		profileSprites[2].x = pos[0] + this.faceOffset[0];
-		profileSprites[2].y = pos[1] + this.faceOffset[1];
+		profileSprites[2].x = pos[0] - this.faceOffset[0];
+		profileSprites[2].y = pos[1] - this.faceOffset[1];
 		profileSprites[2].draw();
 
 		// hair
 		profileSprites[0].sheetX = 16*this.hairPick-16;
-		profileSprites[0].x = pos[0] + this.faceOffset[0];
-		profileSprites[0].y = pos[1] + this.faceOffset[1];
+		profileSprites[0].x = pos[0] - this.faceOffset[0];
+		profileSprites[0].y = pos[1] - this.faceOffset[1];
 		profileSprites[0].draw();
+
+		if(collidePoint([mouse.x, mouse.y], [pos[0] - this.faceOffset[0], pos[1] - this.faceOffset[1], this.faceOffset[0]*2, this.faceOffset[1]*2]) === true && this.descBoxAlpha <= 1){
+			this.descBoxAlpha += 0.01;
+		}else if(this.descBoxAlpha > 0){
+			this.descBoxAlpha -= 0.01;
+		}
+
+		if(this.descBoxAlpha > 0.05){
+			c.beginPath();
+			c.fillStyle = `rgba(255, 255, 255, ${this.descBoxAlpha})`;
+			c.fillRect(pos[0]-125, pos[1]-25, 100, 50);
+
+			showText(this.hairName, pos[0]-75, pos[1]-10, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.headName, pos[0]-75, pos[1]-0, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.shirtName, pos[0]-75, pos[1]+10, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.pantsName, pos[0]-75, pos[1]+20, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+		}
 	}
 	drawPerson(){
 		//if(this.arrestable === true){
