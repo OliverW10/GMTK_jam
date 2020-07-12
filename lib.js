@@ -389,7 +389,7 @@ class spriteSheet{
         this.draww = w;
         this.drawh = h;
     }
-    draw(alpha = 1){
+    draw(alpha = 1,rotation=0){
         c.save();
         c.imageSmoothingEnabled = false;
         c.webkitImageSmoothingEnabled = false;
@@ -398,8 +398,17 @@ class spriteSheet{
             this.sheetX = 0;
 		}
 		c.globalAlpha = alpha;
-        c.drawImage(this.img,this.sheetX,this.states[this.state][0],this.w,this.h,this.x*scale,this.y*scale,this.draww*scale,this.drawh*scale);
-        c.restore();
+		if(rotation > 0){
+            c.translate(this.x+this.draww/2,this.y+this.drawh/2);
+            c.rotate(rotation);
+            c.drawImage(this.img,this.sheetX,this.states[this.state][0],this.w,this.h,-this.draww/2,-this.drawh/2,this.draww,this.drawh);
+
+        }else{
+            c.translate(this.x,this.y);
+            c.drawImage(this.img,this.sheetX,this.states[this.state][0],this.w,this.h,0,0,this.draww,this.drawh);
+
+        }
+		c.restore();
     }
     addState(statename,correspondingLine,numofframes){
         this.states[statename] = [correspondingLine*this.h-this.h,numofframes];

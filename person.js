@@ -39,6 +39,8 @@ var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h 
 
 class Person{
 	constructor(rect){
+		this.trapdoor = new spriteSheet("assets/trapdoor.png",31,22,2,0,0,32*2.5,22*2.5);
+		this.trapdoor.addState("idle",1,59);
 		this.rect = rect;
 		this.walls = [
 			[this.rect[0],this.rect[1]-20,this.rect[2]+20,20],
@@ -46,11 +48,15 @@ class Person{
 			[this.rect[0]+this.rect[2],this.rect[1],20,this.rect[3]],
 			[this.rect[0],this.rect[1]+this.rect[3],this.rect[2],20]
 		];
-
+		this.offset = 0;
 		this.arrestable = false;
 		this.room = 1;
 		this.w = faceW;
 		this.h = faceH;
+		this.drawW = this.w;
+		this.drawH = this.h
+		this.drawX = 0;
+		this.drawY = 0;
 		this.x = random(rect[0],rect[0]+rect[2]-this.w);
 		this.y = random(rect[1],rect[1]+rect[3]-this.h);
 		this.timer = 0;
@@ -83,10 +89,11 @@ class Person{
 
 		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
-
+		this.rot = 0;
 
 		this.faceOffset = [0,0]
 		this.touchindoor = false;
+		this.trapdooring = false;
 	}
 	drawProfile(rect){ // draws the profile picture for binder
 		//head
@@ -108,13 +115,50 @@ class Person{
 		profileSprites[0].draw();
 	}
 	drawPerson(){
+		if(this.trapdooring){
+			this.trapdoor.x = this.x-this.w/2;
+			this.trapdoor.y = this.y+this.h/2;
+			if(this.trapdoor.sheetX >= 1829-31){
+				this.trapdooring = false;
+				people = arrayRemove(people,this);
+			}
+		}
 		for(var x of this.clothes){
-			x.x = this.x;
-			x.y = this.y;
+			x.x = this.x + this.drawX;
+			x.y = this.y + this.drawY;
+			x.draww = this.drawW;
+			x.drawh = this.drawH;
+			if(this.trapdooring && this.trapdoor.sheetX >= 17*31 && this.drawW > 0){
+				this.drawW-=0.1;
+				this.drawH-=0.2;
+				this.drawX+=0.05;
+				this.drawY+=0.2;
+				this.rot += Math.PI/180;
+			}
 			x.frameCalc(1);
-			x.draw(1);
+			if(this.trapdoor.sheetX < 41 * 31){
+				x.draw(1,this.rot);
+
+			}
 			//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 		}
+		
+		if(AABBCollision(this.x,this.y-20,this.w+20,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
+			cankill = false;
+			this.fuck = true;
+		}
+		if(this.fuck&&!this.trapdooring){
+			showText("'Escort out'",this.x,this.y,15,"red");
+			if(!AABBCollision(this.x,this.y-20,this.w+20,this.h,mouse.x,mouse.y,0,0)){
+				this.fuck = false;
+				cankill = true;
+			}
+			if(mouse.button.left){
+				console.log("fuck")
+				this.trapdooring = true;
+			}
+		}
+
 		/*
 		for(var x of this.walls){
 			drawRect(x[0],x[1],x[2],x[3],"blue",1,"black",1)
@@ -172,7 +216,7 @@ class Person{
 					this.y = this.rect[1]+this.rect[3]*this.target[6];
 					
 				}
-			}else{
+			}else if(!this.trapdooring){
 				this.x += Math.cos(rads)*this.speed;
 				for(var x of this.walls){
 					if(AABBCollision(this.x,this.y,this.w,this.h,x[0],x[1],x[2],x[3])){

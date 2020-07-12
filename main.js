@@ -10,6 +10,7 @@ for(var i = 0; i < 25; i += 1){
 }
 
 var rect = [200, 38, 400, 250]
+var cankill = true;
 var moniter = new Camera(rect);
 
 var binder = new Binder(people);
@@ -26,12 +27,13 @@ function drawGame(){
     poster.draw();
     binder.draw([250, 350, 300, 225]);
     for(var x of people){
-        if(moniter.currentLocation == x.room && moniter.state == "inspect" && x.y <= rect[1]+rect[3]*0.5){
-            x.drawPerson();
+        if(x.trapdooring  && x.room == moniter.currentLocation && moniter.state == "inspect"){
+            x.trapdoor.draw();
+			x.trapdoor.frameCalc(1);
         }
     }
     for(var x of people){
-        if(moniter.currentLocation == x.room && moniter.state == "inspect" && x.y > rect[1]+rect[3]*0.5){
+        if(moniter.currentLocation == x.room && moniter.state == "inspect"){
             x.drawPerson();
         }
     }
