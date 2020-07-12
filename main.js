@@ -8,35 +8,44 @@ var bgalpha = 1;
 var day = 1;
 
 var gameState = "menu"; // can also be "menu"
+var people = []
 var score = 10000;
-
-var people = [];
-for(var i = 0; i < 3; i += 1){
-	people.push(new Person([200, 38, 400, 250], true));
-}
-var wantedPeople = [...people] // deep copies
-for(var i = 0; i < 25; i += 1){
-	var thisPerson = new Person([200, 38, 400, 250], false)
-	while(wantedPeople[0].hasSameClothes(thisPerson) == true || wantedPeople[1].hasSameClothes(thisPerson) == true || wantedPeople[2].hasSameClothes(thisPerson) == true){
-		thisPerson = new Person([200, 38, 400, 250], false)
-	}
-	people.push(thisPerson);
-}
-
-var rect = [200, 38, 400, 250]
-var cankill = true;
-var moniter = new Camera(rect);
+var wantedPeople = []
+var moniter = undefined;
+var binder = undefined;
+var tutorial = undefined;
+var clock = undefined;
+var poster = undefined;
 
 var authorisedNum = 25; // can ramp up with difficulty
+function reset(){
+	score = 10000;
+	people = [];
+	for(var i = 0; i < 3; i += 1){
+		people.push(new Person([200, 38, 400, 250], true));
+	}
+	wantedPeople = [...people] // deep copies
+	for(var i = 0; i < 25; i += 1){
+		var thisPerson = new Person([200, 38, 400, 250], false)
+		while(wantedPeople[0].hasSameClothes(thisPerson) == true || wantedPeople[1].hasSameClothes(thisPerson) == true || wantedPeople[2].hasSameClothes(thisPerson) == true){
+			thisPerson = new Person([200, 38, 400, 250], false)
+		}
+		people.push(thisPerson);
+	}
+	var rect = [200, 38, 400, 250]
+	moniter = new Camera(rect);
 
-var z = round(random(0, people.length - authorisedNum))
-var binder = new Binder(people.slice(z, z+authorisedNum));
+	var z = round(random(0, people.length - authorisedNum))
+	binder = new Binder(people.slice(z, z+authorisedNum));
 
-var poster = new Poster(people);
+	poster = new Poster(people);
 
-var tutorial = new Tutorial();
+	tutorial = new Tutorial();
 
-var clock = new Clock(50, 33, 50);
+	clock = new Clock(50, 33, 50);
+}
+reset();
+var cankill = true;
 
 var deskImg = new image("assets/monitor.png");
 
@@ -86,6 +95,7 @@ function drawMenu(){
 	c.fillRect(...playButtonRect);
 	showText("Play", playButtonRect[0]+playButtonRect[2]/2, playButtonRect[1]+playButtonRect[3]/2, 20);
 	if(playButtonHeld == true && mouse.button.left == false){
+		reset();
 		gameState = "game"
 	}
 	if(collidePoint([mouse.x, mouse.y], playButtonRect)){
@@ -102,9 +112,10 @@ function drawMenu(){
 	if(won === true){
 		wonTimer += 1
 		if(wonTimer > 240){
-			won = false
+			won = false;
 		}
 		winImg.drawImg(0, 0, 800, 600);
+		showText("Score: "+round(score), 400, 500, 40, "white");
 	}
 }
 
