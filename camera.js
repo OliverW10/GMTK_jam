@@ -3,6 +3,7 @@ class Camera{
         this.locations = [[0.45,0.85,0.08,0.15,1],[0.34,0.6,0.3,0.25,2],[0.40,0.35,0.13,0.25,3],[0.64,0.75,0.2,0.15,4],[0.64,0.35,0.1,0.35,5],[0.24,0.65,0.1,0.15,6]];
         this.currentLocation = 1;
         this.state = "overview";
+        this.bg = new image("assets/room"+this.currentLocation+".png");
     }
     draw(rect){
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
@@ -20,12 +21,16 @@ class Camera{
                 }
             }
         }else{
-            showText("Room #"+this.currentLocation,rect[0]+rect[2]*0.5,rect[1]+rect[3]*0.05,20)
             if(mouse.button.right){
                 this.state = "overview";
             }
+            this.bg = new image("assets/room"+this.currentLocation+".png");
+            this.bg.drawImg(rect[0],rect[1],rect[2],rect[3],1);
             
         }
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"rgba(50, 50, 200, 0.3)",1);
+        if(this.state == "inspect"){
+            showText("Room #"+this.currentLocation,rect[0]+rect[2]*0.11,rect[1]+rect[3]*0.07,20,"white")
+        }
     }
 }

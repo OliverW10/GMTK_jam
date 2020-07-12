@@ -24,8 +24,14 @@ function drawGame(){
     moniter.draw([200, 38, 400, 250]);
     poster.draw();
     binder.draw([250, 350, 300, 225]);
+    var rect = [200, 38, 400, 250]
     for(var x of people){
-        if(moniter.currentLocation == x.room && moniter.state == "inspect"){
+        if(moniter.currentLocation == x.room && moniter.state == "inspect" && x.y <= rect[1]+rect[3]*0.5){
+            x.drawPerson();
+        }
+    }
+    for(var x of people){
+        if(moniter.currentLocation == x.room && moniter.state == "inspect" && x.y > rect[1]+rect[3]*0.5){
             x.drawPerson();
         }
     }

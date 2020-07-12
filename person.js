@@ -22,22 +22,32 @@ var restrictedRooms = {
 	3:false,
 	4:false,
 	5:false,
-	6:true
+	6:false
 }
 var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h and tpx,tpy are as a percentage of the monitor rect
-	[0.45,0,0.1,0.05,2,0.5,0.7,1],
+	[0.45,0,0.1,0.05,2,0.5,0.6,1],
 	[0.45,0.95,0.1,0.05,1,0.5,0.1,2],
 	[0,0.45,0.05,0.1,6,0.75,0.45,2],
-	[0.95,0.45,0.05,0.1,2,0,0.45,6]
+	[0.95,0.45,0.05,0.1,2,0,0.45,6],
+	[]
 ]
+
 class Person{
 	constructor(rect){
+		this.rect = rect;
+		this.walls = [
+			[this.rect[0],this.rect[1]-20,this.rect[2]+20,20],
+			[this.rect[0]-20,this.rect[1]-20,20,this.rect[3]+20],
+			[this.rect[0]+this.rect[2],this.rect[1],20,this.rect[3]],
+			[this.rect[0],this.rect[1]+this.rect[3],this.rect[2],20]
+		];
+
 		this.arrestable = false;
 		this.room = 1;
 		this.w = faceW;
 		this.h = faceH;
-		this.x = random(rect[0],rect[0]+rect[2]-16);
-		this.y = random(rect[1],rect[1]+rect[3]-32);
+		this.x = random(rect[0],rect[0]+rect[2]-this.w);
+		this.y = random(rect[1],rect[1]+rect[3]-this.h);
 		this.timer = 0;
 		this.target = [];
 		this.speed = 1;
@@ -69,7 +79,6 @@ class Person{
 		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
 
-		this.rect = rect;
 
 		this.faceOffset = [0,0]
 		this.touchindoor = false;
@@ -101,13 +110,18 @@ class Person{
 			x.draw(1);
 			//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 		}
+		/*
+		for(var x of this.walls){
+			drawRect(x[0],x[1],x[2],x[3],"blue",1,"black",1)
+		}
+		*/
+		
 		for(var x of doors){
 			if(x[7]==moniter.currentLocation){
 				drawRect(this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],"red",0,"",1);		
 			}
 		}
 		showText(Math.round(this.timer),this.x,this.y,10);
-
 	}
 	update(){
 		
@@ -122,7 +136,6 @@ class Person{
 				}
 				if(temp.length > 0){
 					var w = temp[Math.round(random(0,temp.length-1))];
-					console.log(w[4])
 					if(restrictedRooms[w[4]] == false || day > 2){
 						this.target = w;
 						this.touchindoor = true;
@@ -148,14 +161,34 @@ class Person{
 					this.room = this.target[4];
 					this.timer = 0;
 					this.touchindoor = false;
+
+
 					this.x = this.rect[0]+this.rect[2]*this.target[5];
+					
 					this.y = this.rect[1]+this.rect[3]*this.target[6];
-					console.log(this.x,this.y)
+					
 				}
 			}else{
 				this.x += Math.cos(rads)*this.speed;
+				for(var x of this.walls){
+					if(AABBCollision(this.x,this.y,this.w,this.h,x[0],x[1],x[2],x[3])){
+						if(this.x > x[0]){
+							this.x = x[0]+x[2];
+						}else{
+							this.x = x[0]-this.w;
+						}
+					}
+				}
 				this.y += Math.sin(rads)*this.speed;
-				
+				for(var x of this.walls){
+					if(AABBCollision(this.x,this.y,this.w,this.h,x[0],x[1],x[2],x[3])){
+						if(this.y > x[1]){
+							this.y = x[1]+x[3];
+						}else{
+							this.y = x[1]-this.h;
+						}
+					}
+				}
 			}
 			if(rads == 0){
 				for(var x of this.clothes){
