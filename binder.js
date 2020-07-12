@@ -23,7 +23,7 @@ class Page{
 
 class Binder{
 	constructor(peopleList){
-		this.people = peopleList.filter(obj => obj.arrestable === false); // only good people in binder
+		this.people = peopleList.filter(obj => obj.wanted === false); // only good people in binder
 		this.pages = [];
 		this.page = 0;
 		this.goalPage = 0;
@@ -97,7 +97,7 @@ class Binder{
 class Poster{
 	constructor(people){
 		this.rects = [[625, 25, 50, 50], [625, 75, 50, 50], [625, 125, 50, 50], [625, 175, 50, 50]]; //[628, 0, 172, 197] poster size
-		this.people = people.filter(per => per.arrestable == true).slice(0, 3) // 3 is max
+		this.people = people.filter(per => per.wanted == true).slice(0, 3) // 3 is max
 		this.infoBoxAlpha = createArray(0, this.people.length); // tranparency of each of the description boxes
 	}
 	draw(){

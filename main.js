@@ -25,6 +25,8 @@ var poster = new Poster(people);
 
 var tutorial = new Tutorial();
 
+var clock = new Clock(50, 33, 50);
+
 var deskImg = new image("assets/monitor.png");
 
 function drawGame(){
@@ -44,6 +46,7 @@ function drawGame(){
             x.drawPerson();
         }
     }
+    clock.draw();
     tutorial.execute();
 }
 
