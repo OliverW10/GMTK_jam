@@ -69,8 +69,14 @@ function update(){
 		updateMenu();
 	}
 }
-
+var mousedown = false;
 function main(){
+    if(mouse.button.left && !mousedown){
+        mousedown = true;
+    }
+    if(!mouse.button.left){
+        mousedown = false;
+    }
     update();
     draw();
 }

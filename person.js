@@ -91,15 +91,16 @@ class Person{
 		this.direction = -1; // the direction they are facing
 		this.rot = 0;
 
-		this.faceOffset = [0,0]
+		this.faceOffset = [-24,-24]
 		this.touchindoor = false;
 		this.trapdooring = false;
+		this.hhh = false;
 	}
 	drawProfile(rect){ // draws the profile picture for binder
 		//head
 		profileSprites[1].sheetX = 16*this.headPick-16; 
-		profileSprites[1].x = rect[0];
-		profileSprites[1].y = rect[1];
+		profileSprites[1].x = rect[0]+this.faceOffset[0];
+		profileSprites[1].y = rect[1]+this.faceOffset[1];
 		profileSprites[1].draw();
 
 		// face
@@ -110,19 +111,12 @@ class Person{
 
 		// hair
 		profileSprites[0].sheetX = 16*this.hairPick-16;
-		profileSprites[0].x = rect[0];
-		profileSprites[0].y = rect[1];
+		profileSprites[0].x = rect[0]+this.faceOffset[0];
+		profileSprites[0].y = rect[1]+this.faceOffset[1];
 		profileSprites[0].draw();
 	}
 	drawPerson(){
-		if(this.trapdooring){
-			this.trapdoor.x = this.x-this.w/2;
-			this.trapdoor.y = this.y+this.h/2;
-			if(this.trapdoor.sheetX >= 1829-31){
-				this.trapdooring = false;
-				people = arrayRemove(people,this);
-			}
-		}
+		
 		for(var x of this.clothes){
 			x.x = this.x + this.drawX;
 			x.y = this.y + this.drawY;
@@ -143,22 +137,39 @@ class Person{
 			//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 		}
 		
-		if(AABBCollision(this.x,this.y-20,this.w+20,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
+		if(AABBCollision(this.x,this.y,this.w,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
 			cankill = false;
 			this.fuck = true;
 		}
 		if(this.fuck&&!this.trapdooring){
-			showText("'Escort out'",this.x,this.y,15,"red");
-			if(!AABBCollision(this.x,this.y-20,this.w+20,this.h,mouse.x,mouse.y,0,0)){
+			showText("'Escort out'",this.x+this.w/2,this.y-10,15,"red");
+			c.lineWidth = 2;
+			drawRect(this.x,this.y,this.w,this.h,"red",0,1,1);
+			c.lineWidth = 1;
+			if(!AABBCollision(this.x,this.y,this.w,this.h,mouse.x,mouse.y,0,0)){
 				this.fuck = false;
 				cankill = true;
 			}
-			if(mouse.button.left){
-				console.log("fuck")
+			if(mouse.button.left && !this.hhh){
 				this.trapdooring = true;
 			}
+			
 		}
-
+		if(mouse.button.left && !this.hhh){
+			this.hhh = true;
+		}
+		if(!mouse.button.left){
+			this.hhh = false;
+		}
+		if(this.trapdooring){
+			this.trapdoor.x = this.x-this.w/2;
+			this.trapdoor.y = this.y+this.h/2;
+			if(this.trapdoor.sheetX >= 1829-31){
+				this.trapdooring = false;
+				cankill = true;
+				people = arrayRemove(people,this);
+			}
+		}
 		/*
 		for(var x of this.walls){
 			drawRect(x[0],x[1],x[2],x[3],"blue",1,"black",1)

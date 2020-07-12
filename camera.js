@@ -10,6 +10,8 @@ class Camera{
     draw(rect){
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
         if(this.state == "overview"){
+            cankill = true;
+
             for(var x of this.locations){
                 var temp = [rect[0]+rect[2]*x[0],rect[1]+rect[3]*x[1]-30,rect[2]*x[2],rect[3]*x[3]];
                 if(AABBCollision(temp[0],temp[1],temp[2],temp[3],mouse.x,mouse.y,0,0)){
@@ -25,6 +27,7 @@ class Camera{
         }else{
             if(mouse.button.right){
                 this.state = "overview";
+                
             }
             this.bg = new image("assets/room"+this.currentLocation+".png");
             this.bg.drawImg(rect[0],rect[1],rect[2],rect[3],1);
