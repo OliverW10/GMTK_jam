@@ -1,7 +1,14 @@
+var redAlpha = 0;
+function badEffect(){
+	redAlpha = 0.5;
+
+}
+
 var bgalpha = 1;
 var day = 1;
 
 var gameState = "menu"; // can also be "menu"
+var score = 10000;
 
 var people = [];
 for(var i = 0; i < 3; i += 1){
@@ -39,6 +46,7 @@ var won = false;
 var wonTimer = 0;
 var wantedTest= person => person.wanted == true && person.alive == true; // tests if a person is both alive and wanted
 function drawGame(){
+	score -= 1;
 	deskImg.drawImg(0, 0, 800, 600);
     moniter.draw([200, 38, 400, 250]);
     poster.draw();
@@ -107,6 +115,13 @@ function draw(){
 	}
 	if(gameState == "menu"){
 		drawMenu();
+	}
+	if(redAlpha > 0){
+		redAlpha -= 0.005;
+		c.beginPath();
+		c.fillStyle = `rgb(255, 0, 0, ${redAlpha})`;
+		c.fillRect(0, 0, 800, 600);
+		showText("Innocent killed", 400, 300, 50, "rgb(0, 0, 0, "+redAlpha*2+")");
 	}
 }
 function updateMenu(){

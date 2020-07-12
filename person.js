@@ -45,6 +45,8 @@ var faceNames = ["bruh", "", "Glasses", "Cigar"];
 
 var xImg = new image("assets/x.png");
 
+var innocentsKilled = 0;
+
 class Person{
 	constructor(rect, wanted){
 		this.trapdoor = new spriteSheet("assets/trapdoor.png",31,22,2,0,0,32*2.5,22*2.5);
@@ -210,6 +212,11 @@ class Person{
 					this.trapdooring = false;
 					cankill = true;
 					this.alive = false;
+					if(this.wanted === false){
+						innocentsKilled += 1;
+						badEffect();
+						score -= 500;
+					}
 				}
 			}
 			/*
