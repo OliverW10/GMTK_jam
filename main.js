@@ -37,7 +37,7 @@ var menuImg = new image("assets/gallerywatch.png");
 var winImg = new image("assets/win.png");
 var won = false;
 var wonTimer = 0;
-
+var wantedTest= person => person.wanted == true && person.alive == true; // tests if a person is both alive and wanted
 function drawGame(){
 	deskImg.drawImg(0, 0, 800, 600);
     moniter.draw([200, 38, 400, 250]);
@@ -49,6 +49,11 @@ function drawGame(){
 			x.trapdoor.frameCalc(1);
         }
     }
+    if(people.some(wantedTest) === false){ // if noone wanted is alive or if there is noone wanted this is false
+    	won = true;
+    	wonTimer = 0;
+    	gameState = "menu"
+    }
     people.sort((a, b) => a.y-b.y)
     for(var x of people){
         if(moniter.currentLocation == x.room && moniter.state == "inspect"){
@@ -59,8 +64,33 @@ function drawGame(){
     tutorial.execute();
 }
 
+var playButtonHovered = 0;
+var playButtonColours = ["rgb(200, 200, 210)", "rgb(150, 150, 157)"];
+var playButtonRect = [434, 136, 132, 42];
+var playButtonHeld = false;
+
 function drawMenu(){
 	menuImg.drawImg(0, 0, 800, 600);
+	// play button
+	c.beginPath();
+	c.fillStyle = playButtonColours[playButtonHovered];
+	c.lineWidth = 3;
+	c.fillRect(...playButtonRect);
+	showText("Play", playButtonRect[0]+playButtonRect[2]/2, playButtonRect[1]+playButtonRect[3]/2, 20);
+	if(playButtonHeld == true && mouse.button.left == false){
+		gameState = "game"
+	}
+	if(collidePoint([mouse.x, mouse.y], playButtonRect)){
+		playButtonHovered = 1;
+		if(mouse.button.left === true){
+			playButtonHeld = true;
+		}else{
+			playButtonHeld = false;
+		}
+	}else{
+		playButtonHeld = false;
+		playButtonHovered = 0;
+	}
 	if(won === true){
 		wonTimer += 1
 		if(wonTimer > 240){
