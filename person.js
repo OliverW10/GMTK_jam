@@ -37,6 +37,11 @@ var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h 
 	[0.45,0,0.1,0.05,3,0.5,0.6,2],
 ]
 
+var shirtNames = ["Blue Shirt", "Tux", "Grey Shirt"];
+var hairNames = ["Bald", "Neat brown hair", "Cap", "Long Hair", "Fresh Black fade", "Blonde", "Red-head"];
+var pantsNames = ["Brown Pants"];
+var headNames = ["Tanned", "White", "Pale White", "African american", "Beard", "Moustache", "Side burns", "Obnoxious Moustache"];
+
 class Person{
 	constructor(rect, wanted){
 		this.trapdoor = new spriteSheet("assets/trapdoor.png",31,22,2,0,0,32*2.5,22*2.5);
@@ -74,10 +79,12 @@ class Person{
 		this.numOfPantsSprites = 1;
 		this.hairPick = Math.round(random(1,this.numOfHairSprites));
 		this.headPick = Math.round(random(1,this.numOfHeadSprites));
+		this.pantsPick = Math.round(random(1,this.numOfPantsSprites));
+		this.shirtPick = Math.round(random(1,this.numOfShirtSprites))
 
 		this.clothes = [
-			new spriteSheet("assets/pants"+Math.round(random(1,this.numOfPantsSprites))+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
-			new spriteSheet("assets/shirt"+Math.round(random(1,this.numOfShirtSprites))+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
+			new spriteSheet("assets/pants"+this.pantsPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
+			new spriteSheet("assets/shirt"+this.shirtPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 			new spriteSheet("assets/head"+this.headPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 			new spriteSheet("assets/hair"+this.hairPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 		] // stores the actual sprite sheets for the clothes
@@ -86,6 +93,10 @@ class Person{
 			z.addState("right",2,8);
 			z.addState("idle",3,1);
 		}
+		this.shirtName = shirtNames[this.shirtPick];
+		this.headName = headNames[this.headPick];
+		this.pantsName = pantsNames[this.pantsPick];
+		this.hairName = hairNames[this.hairPick];
 
 		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
@@ -96,23 +107,23 @@ class Person{
 		this.trapdooring = false;
 		this.hhh = false;
 	}
-	drawProfile(rect){ // draws the profile picture for binder
+	drawProfile(pos){ // draws the profile picture for binder
 		//head
 		profileSprites[1].sheetX = 16*this.headPick-16; 
-		profileSprites[1].x = rect[0] + this.faceOffset[0];
-		profileSprites[1].y = rect[1] + this.faceOffset[1];
+		profileSprites[1].x = pos[0] + this.faceOffset[0];
+		profileSprites[1].y = pos[1] + this.faceOffset[1];
 		profileSprites[1].draw();
 
 		// face
 		profileSprites[2].sheetX = profileSprites[0].w*this.face
-		profileSprites[2].x = rect[0] + this.faceOffset[0];
-		profileSprites[2].y = rect[1] + this.faceOffset[1];
+		profileSprites[2].x = pos[0] + this.faceOffset[0];
+		profileSprites[2].y = pos[1] + this.faceOffset[1];
 		profileSprites[2].draw();
 
 		// hair
 		profileSprites[0].sheetX = 16*this.hairPick-16;
-		profileSprites[0].x = rect[0] + this.faceOffset[0];
-		profileSprites[0].y = rect[1] + this.faceOffset[1];
+		profileSprites[0].x = pos[0] + this.faceOffset[0];
+		profileSprites[0].y = pos[1] + this.faceOffset[1];
 		profileSprites[0].draw();
 	}
 	drawPerson(){
@@ -142,7 +153,7 @@ class Person{
 			this.fuck = true;
 		}
 		if(this.fuck&&!this.trapdooring){
-			showText("'Escort out'",this.x+this.w/2,this.y-10,15,"red");
+			showText("Arrest",this.x+this.w/2,this.y-10,15,"red");
 			c.lineWidth = 2;
 			drawRect(this.x,this.y,this.w,this.h,"red",0,1,1);
 			c.lineWidth = 1;

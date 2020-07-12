@@ -38,6 +38,7 @@ function drawGame(){
 			x.trapdoor.frameCalc(1);
         }
     }
+    people.sort((a, b) => a.y-b.y)
     for(var x of people){
         if(moniter.currentLocation == x.room && moniter.state == "inspect"){
             x.drawPerson();

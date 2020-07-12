@@ -96,15 +96,33 @@ class Binder{
 
 class Poster{
 	constructor(people){
-		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [650, 200, 50, 50]]; //[628, 0, 172, 197] poster size
+		this.rects = [[625, 25, 50, 50], [625, 75, 50, 50], [625, 125, 50, 50], [625, 175, 50, 50]]; //[628, 0, 172, 197] poster size
 		this.people = people.filter(per => per.arrestable == true).slice(0, 3) // 3 is max
-		console.log(this.people)
+		this.infoBoxAlpha = createArray(0, this.people.length);
 	}
 	draw(){
 		if(this.people.length > 0){
 			for(var x = 0; x < this.people.length; x++){
-				this.people[x].drawProfile(this.rects[x]);
-				showText(`${this.people[x].name}`, this.rects[x][0]+70, this.rects[x][1]+10, 10);
+				this.people[x].drawProfile([this.rects[x][0]+this.rects[x][2]/2, this.rects[x][1]+this.rects[x][3]/2]);
+				showText(`${this.people[x].name}`, this.rects[x][0]+100, this.rects[x][1]+20, 10);
+				showText(`Last seen in ${this.people[x].shirtName}`, this.rects[x][0]+100, this.rects[x][1]+35, 10);
+				// c.beginPath();
+				// c.fillStyle = "red";
+				// c.fillRect(...this.rects[x]);
+
+				if(collidePoint([mouse.x, mouse.y], this.rects[x]) === true && this.infoBoxAlpha[x] <= 1){
+					this.infoBoxAlpha[x] += 0.01;
+				}else if(this.infoBoxAlpha[x] > 0){
+					this.infoBoxAlpha[x] -= 0.01;
+				}
+
+				if(this.infoBoxAlpha[x] > 0.05){
+					c.beginPath();
+					c.fillStyle = `rgba(255, 255, 255, ${this.infoBoxAlpha[x]})`;
+					c.fillRect(523, this.rects[x][1], 100, 50);
+
+					showText(this.people[x].hairName, 600, this.rects[x][1], 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
+				}
 			}
 		}
 	}
