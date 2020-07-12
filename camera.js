@@ -4,11 +4,13 @@ class Camera{
         this.currentLocation = 1;
         this.state = "overview";
         this.bg = new image("assets/room"+this.currentLocation+".png");
+        this.restrictedImg = new image("assets/restricted.png");
         this.returnsprite = new spriteSheet("assets/return.png",32,16,30,rect[0]+rect[2]*0,rect[1]+rect[3]*0.86,64,32);
         this.returnsprite.addState("idle",1,2);
         this.heldDown = false;
     }
     draw(rect){
+        c.lineWidth = 3;
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
         if(this.state == "overview"){
             cankill = true;
@@ -27,17 +29,22 @@ class Camera{
                         this.heldDown = true;
                     }
                 }else{
-                    drawRect(temp[0],temp[1],temp[2],temp[3],"black",0,"white",1);
+                    if(restrictedRooms[x[4]] === true){
+                        drawRect(temp[0],temp[1],temp[2],temp[3],"black",1,"rgb(255, 200, 200)",1);
+                    }else{
+                        drawRect(temp[0],temp[1],temp[2],temp[3],"black",1,"white",1);
+                    }
                 }
             }
         }else{
             if(mouse.button.right){
                 this.state = "overview";
-                
             }
             this.bg = new image("assets/room"+this.currentLocation+".png");
             this.bg.drawImg(rect[0],rect[1],rect[2],rect[3],1);
-            
+            if(restrictedRooms[this.currentLocation] === true){
+                this.restrictedImg.drawImg(rect[0],rect[1],rect[2],rect[3],1)
+            }
         }
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"rgba(50, 50, 200, 0.3)",1);
         if(this.state == "inspect"){

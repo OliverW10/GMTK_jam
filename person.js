@@ -21,8 +21,8 @@ var restrictedRooms = {
 	2:false,
 	3:false,
 	4:false,
-	5:false,
-	6:false
+	5:true,
+	6:true
 }
 var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h and tpx,tpy are as a percentage of the monitor rect
 	[0.45,0,0.1,0.05,2,0.5,0.6,1],
@@ -127,27 +127,27 @@ class Person{
 		profileSprites[0].draw();
 	}
 	drawPerson(){
-		
-		for(var x of this.clothes){
-			x.x = this.x + this.drawX;
-			x.y = this.y + this.drawY;
-			x.draww = this.drawW;
-			x.drawh = this.drawH;
-			if(this.trapdooring && this.trapdoor.sheetX >= 17*31 && this.drawW > 0){
-				this.drawW-=0.1;
-				this.drawH-=0.2;
-				this.drawX+=0.05;
-				this.drawY+=0.2;
-				this.rot += Math.PI/180;
-			}
-			x.frameCalc(1);
-			if(this.trapdoor.sheetX < 41 * 31){
-				x.draw(1,this.rot);
+		//if(this.arrestable === true){
+			for(var x of this.clothes){
+				x.x = this.x + this.drawX;
+				x.y = this.y + this.drawY;
+				x.draww = this.drawW;
+				x.drawh = this.drawH;
+				if(this.trapdooring && this.trapdoor.sheetX >= 17*31 && this.drawW > 0){
+					this.drawW-=0.1;
+					this.drawH-=0.2;
+					this.drawX+=0.05;
+					this.drawY+=0.2;
+					this.rot += Math.PI/180;
+				}
+				x.frameCalc(1);
+				if(this.trapdoor.sheetX < 41 * 31){
+					x.draw(1,this.rot);
 
+				}
+				//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 			}
-			//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
-		}
-		
+		//}
 		if(AABBCollision(this.x,this.y,this.w,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
 			cankill = false;
 			this.fuck = true;

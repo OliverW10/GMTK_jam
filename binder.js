@@ -105,7 +105,7 @@ class Poster{
 			for(var x = 0; x < this.people.length; x++){
 				this.people[x].drawProfile([this.rects[x][0]+this.rects[x][2]/2, this.rects[x][1]+this.rects[x][3]/2]);
 				showText(`${this.people[x].name}`, this.rects[x][0]+100, this.rects[x][1]+20, 10);
-				showText(`Last seen in ${this.people[x].shirtName}`, this.rects[x][0]+100, this.rects[x][1]+35, 10);
+				showText(`Hover for description`, this.rects[x][0]+100, this.rects[x][1]+35, 10);
 				// c.beginPath();
 				// c.fillStyle = "red";
 				// c.fillRect(...this.rects[x]);
@@ -121,7 +121,10 @@ class Poster{
 					c.fillStyle = `rgba(255, 255, 255, ${this.infoBoxAlpha[x]})`;
 					c.fillRect(523, this.rects[x][1], 100, 50);
 
-					showText(this.people[x].hairName, 600, this.rects[x][1], 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
+					showText(this.people[x].hairName, 590, this.rects[x][1]+10, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
+					showText(this.people[x].headName, 590, this.rects[x][1]+20, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
+					showText(this.people[x].shirtName, 590, this.rects[x][1]+30, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
+					showText(this.people[x].pantsName, 590, this.rects[x][1]+40, 10, `rgb(0, 0, 0, ${this.infoBoxAlpha[x]})`);
 				}
 			}
 		}
