@@ -6,6 +6,7 @@ class Camera{
         this.bg = new image("assets/room"+this.currentLocation+".png");
         this.returnsprite = new spriteSheet("assets/return.png",32,16,30,rect[0]+rect[2]*0,rect[1]+rect[3]*0.86,64,32);
         this.returnsprite.addState("idle",1,2);
+        this.heldDown = false;
     }
     draw(rect){
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
@@ -16,9 +17,14 @@ class Camera{
                 var temp = [rect[0]+rect[2]*x[0],rect[1]+rect[3]*x[1]-30,rect[2]*x[2],rect[3]*x[3]];
                 if(AABBCollision(temp[0],temp[1],temp[2],temp[3],mouse.x,mouse.y,0,0)){
                     drawRect(temp[0],temp[1],temp[2],temp[3],"black",1,"gray",1);
-                    if(mouse.button.left){
-                        this.state = "inspect";
+
+                    if(this.heldDown === true && mouse.button.left === false){ // goes in when you realease mouse
+                        this.state = "inspect"
                         this.currentLocation = x[4];
+                        this.heldDown = false;
+                    }
+                    if(mouse.button.left){
+                        this.heldDown = true;
                     }
                 }else{
                     drawRect(temp[0],temp[1],temp[2],temp[3],"black",0,"white",1);

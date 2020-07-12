@@ -23,7 +23,7 @@ class Page{
 
 class Binder{
 	constructor(peopleList){
-		this.people = peopleList;
+		this.people = peopleList.filter(obj => obj.arrestable === false); // only good people in binder
 		this.pages = [];
 		this.page = 0;
 		this.goalPage = 0;
@@ -66,7 +66,7 @@ class Binder{
 		drawLine(rect[0]+rect[2]*0.1, rect[1]+rect[3]*1, rect[0]+rect[2]*0.1, rect[1]+rect[3]*1.1, "black");
 
 		if(this.buttonPressed[1] === true && mouse.button.left === false){
-			if(this.page <= this.pages.length-2){
+			if(this.page < this.pages.length-2){
 				this.page += 2;
 			}
 			this.buttonPressed[1] = false
@@ -97,12 +97,14 @@ class Binder{
 class Poster{
 	constructor(people){
 		this.rects = [[650, 50, 50, 50], [650, 100, 50, 50], [650, 150, 50, 50], [650, 200, 50, 50]]; //[628, 0, 172, 197] poster size
-		this.people = people.filter(per => per.arrestable == true); // 4 is max
+		this.people = people.filter(per => per.arrestable == true).slice(0, 3) // 3 is max
+		console.log(this.people)
 	}
 	draw(){
 		if(this.people.length > 0){
-			for(var x = 0; x < this.people.length - 1; x++){
+			for(var x = 0; x < this.people.length; x++){
 				this.people[x].drawProfile(this.rects[x]);
+				showText(`${this.people[x].name}`, this.rects[x][0]+70, this.rects[x][1]+10, 10);
 			}
 		}
 	}

@@ -38,7 +38,7 @@ var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h 
 ]
 
 class Person{
-	constructor(rect){
+	constructor(rect, wanted){
 		this.trapdoor = new spriteSheet("assets/trapdoor.png",31,22,2,0,0,32*2.5,22*2.5);
 		this.trapdoor.addState("idle",1,59);
 		this.rect = rect;
@@ -49,7 +49,7 @@ class Person{
 			[this.rect[0],this.rect[1]+this.rect[3],this.rect[2],20]
 		];
 		this.offset = 0;
-		this.arrestable = false;
+		this.arrestable = wanted;
 		this.room = 1;
 		this.w = faceW;
 		this.h = faceH;
@@ -91,7 +91,7 @@ class Person{
 		this.direction = -1; // the direction they are facing
 		this.rot = 0;
 
-		this.faceOffset = [-24,-24]
+		this.faceOffset = [-24, -24]
 		this.touchindoor = false;
 		this.trapdooring = false;
 		this.hhh = false;
@@ -99,8 +99,8 @@ class Person{
 	drawProfile(rect){ // draws the profile picture for binder
 		//head
 		profileSprites[1].sheetX = 16*this.headPick-16; 
-		profileSprites[1].x = rect[0]+this.faceOffset[0];
-		profileSprites[1].y = rect[1]+this.faceOffset[1];
+		profileSprites[1].x = rect[0] + this.faceOffset[0];
+		profileSprites[1].y = rect[1] + this.faceOffset[1];
 		profileSprites[1].draw();
 
 		// face
@@ -111,8 +111,8 @@ class Person{
 
 		// hair
 		profileSprites[0].sheetX = 16*this.hairPick-16;
-		profileSprites[0].x = rect[0]+this.faceOffset[0];
-		profileSprites[0].y = rect[1]+this.faceOffset[1];
+		profileSprites[0].x = rect[0] + this.faceOffset[0];
+		profileSprites[0].y = rect[1] + this.faceOffset[1];
 		profileSprites[0].draw();
 	}
 	drawPerson(){
@@ -183,7 +183,6 @@ class Person{
 		//showText(Math.round(this.timer),this.x,this.y,10);
 	}
 	update(){
-		
 		if(this.timer <= 0){
 			this.timer = random(100,400);
 			if(Math.random() > 0.9){

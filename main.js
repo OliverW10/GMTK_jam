@@ -6,14 +6,20 @@ var gameState = "game"; // can also be "menu"
 var people = [];
 
 for(var i = 0; i < 25; i += 1){
-	people.push(new Person([200, 38, 400, 250]));
+	people.push(new Person([200, 38, 400, 250], false));
+}
+for(var i = 0; i < 3; i += 1){
+	people.push(new Person([200, 38, 400, 250], true));
 }
 
 var rect = [200, 38, 400, 250]
 var cankill = true;
 var moniter = new Camera(rect);
 
-var binder = new Binder(people);
+var authorisedNum = 5; // can ramp up with difficulty
+
+var z = round(random(0, people.length - authorisedNum))
+var binder = new Binder(people.slice(z, z+authorisedNum));
 
 var poster = new Poster(people);
 
