@@ -11,7 +11,7 @@ var frametimer = 5;
 var profileSprites = [
 new spriteSheet("assets/hairs.png",16,16,0,0,0,48,48), // hair
 new spriteSheet("assets/heads.png", 16, 16, 0, 0, 0, 48, 48), //head
-new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 48, 48)
+new spriteSheet("assets/faces.png", 16, 16, 0, 0, 0, 48, 48) // faces
 ]
 profileSprites[0].addState("idle",1,8)
 profileSprites[1].addState("idle",1,8)
@@ -38,9 +38,10 @@ var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h 
 ]
 
 var shirtNames = ["bruh", "Blue Shirt", "Tux", "Grey Shirt"];
-var hairNames = ["bruh", "Bald", "Neat brown hair", "Cap", "Long Hair", "Fresh Black fade", "Blonde", "Red-head"];
+var hairNames = ["bruh", "Bald", "Neat brown hair", "Scruffy brown hair", "Cap", "Long Hair", "Fresh Black fade", "Blonde", "Red-head"];
 var pantsNames = ["bruh", "Brown Pants", "Black pants"];
 var headNames = ["bruh", "Tanned", "White", "Pale White", "African american", "Beard", "Moustache", "Side burns", "Obnoxious Moustache"];
+var faceNames = ["bruh", "", "Glasses", "Cigar"];
 
 var xImg = new image("assets/x.png");
 
@@ -90,6 +91,7 @@ class Person{
 			new spriteSheet("assets/pants"+this.pantsPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 			new spriteSheet("assets/shirt"+this.shirtPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 			new spriteSheet("assets/head"+this.headPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
+			new spriteSheet("assets/face"+this.facePick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 			new spriteSheet("assets/hair"+this.hairPick+".png",16,32,frametimer,this.x,this.y,faceW,faceH),
 		] // stores the actual sprite sheets for the clothes
 		for(var z of this.clothes){
@@ -101,8 +103,8 @@ class Person{
 		this.headName = headNames[this.headPick];
 		this.pantsName = pantsNames[this.pantsPick];
 		this.hairName = hairNames[this.hairPick];
+		this.faceName = faceNames[this.facePick];
 
-		this.face = Math.floor(random(0, 3));
 		this.direction = -1; // the direction they are facing
 		this.rot = 0;
 
@@ -122,7 +124,7 @@ class Person{
 		profileSprites[1].draw();
 
 		// face
-		profileSprites[2].sheetX = profileSprites[0].w*this.face
+		profileSprites[2].sheetX = 16*this.facePick-16
 		profileSprites[2].x = pos[0] - this.faceOffset[0];
 		profileSprites[2].y = pos[1] - this.faceOffset[1];
 		profileSprites[2].draw();
@@ -144,18 +146,19 @@ class Person{
 			c.fillStyle = `rgba(255, 255, 255, ${this.descBoxAlpha})`;
 			c.fillRect(pos[0]-125, pos[1]-25, 100, 50);
 
-			showText(this.hairName, pos[0]-75, pos[1]-10, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
-			showText(this.headName, pos[0]-75, pos[1]-0, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
-			showText(this.shirtName, pos[0]-75, pos[1]+10, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
-			showText(this.pantsName, pos[0]-75, pos[1]+20, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.hairName, pos[0]-75, pos[1]-15, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.headName, pos[0]-75, pos[1]-6, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.shirtName, pos[0]-75, pos[1]+3, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.pantsName, pos[0]-75, pos[1]+12, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
+			showText(this.faceName, pos[0]-75, pos[1]+21, 10, `rgb(0, 0, 0, ${this.descBoxAlpha})`);
 		}
 		if(this.alive === false){
-
+			xImg.drawImg(pos[0]-24, pos[1]-24, 48, 48, 1);
 		}
 	}
 	drawPerson(){
 		if(this.alive === true){
-			//if(this.wanted === true){
+			if(this.wanted === true){
 				for(var x of this.clothes){
 					x.x = this.x + this.drawX;
 					x.y = this.y + this.drawY;
@@ -175,7 +178,7 @@ class Person{
 					}
 					//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 				}
-			//}
+			}
 			if(AABBCollision(this.x,this.y,this.w,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
 				cankill = false;
 				this.fuck = true;
@@ -310,5 +313,8 @@ class Person{
 
 			this.timer -= 1;
 		}
+	}
+	hasSameClothes(p1){ // checks if all of the clothes are the same
+		return p1.hairPick == this.hairPick && p1.headPick == this.headPick && p1.pantsPick == this.pantsPick && p1.shirtPick == this.shirtPick && p1.facePick == this.facePick;
 	}
 }

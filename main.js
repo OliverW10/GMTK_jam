@@ -1,22 +1,26 @@
 var bgalpha = 1;
 var day = 1;
 
-var gameState = "game"; // can also be "menu"
+var gameState = "menu"; // can also be "menu"
 
 var people = [];
-
-for(var i = 0; i < 25; i += 1){
-	people.push(new Person([200, 38, 400, 250], false));
-}
 for(var i = 0; i < 3; i += 1){
 	people.push(new Person([200, 38, 400, 250], true));
+}
+var wantedPeople = [...people] // deep copies
+for(var i = 0; i < 25; i += 1){
+	var thisPerson = new Person([200, 38, 400, 250], false)
+	while(wantedPeople[0].hasSameClothes(thisPerson) == true || wantedPeople[1].hasSameClothes(thisPerson) == true || wantedPeople[2].hasSameClothes(thisPerson) == true){
+		thisPerson = new Person([200, 38, 400, 250], false)
+	}
+	people.push(thisPerson);
 }
 
 var rect = [200, 38, 400, 250]
 var cankill = true;
 var moniter = new Camera(rect);
 
-var authorisedNum = 5; // can ramp up with difficulty
+var authorisedNum = 25; // can ramp up with difficulty
 
 var z = round(random(0, people.length - authorisedNum))
 var binder = new Binder(people.slice(z, z+authorisedNum));
@@ -28,6 +32,11 @@ var tutorial = new Tutorial();
 var clock = new Clock(50, 33, 50);
 
 var deskImg = new image("assets/monitor.png");
+
+var menuImg = new image("assets/gallerywatch.png");
+var winImg = new image("assets/win.png");
+var won = false;
+var wonTimer = 0;
 
 function drawGame(){
 	deskImg.drawImg(0, 0, 800, 600);
@@ -51,7 +60,14 @@ function drawGame(){
 }
 
 function drawMenu(){
-	// draws menu;
+	menuImg.drawImg(0, 0, 800, 600);
+	if(won === true){
+		wonTimer += 1
+		if(wonTimer > 240){
+			won = false
+		}
+		winImg.drawImg(0, 0, 800, 600);
+	}
 }
 
 function draw(){
