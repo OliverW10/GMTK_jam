@@ -36,6 +36,7 @@ class Camera{
                     }
                 }
             }
+            showText("Camera Overview",rect[0]+rect[2]*0.21,rect[1]+rect[3]*0.07,20,"black")
         }else{
             if(mouse.button.right){
                 this.state = "overview";

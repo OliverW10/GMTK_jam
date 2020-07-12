@@ -160,7 +160,7 @@ class Person{
 	}
 	drawPerson(){
 		if(this.alive === true){
-			if(this.wanted === true){
+			// if(this.wanted === true){
 				for(var x of this.clothes){
 					x.x = this.x + this.drawX;
 					x.y = this.y + this.drawY;
@@ -180,7 +180,7 @@ class Person{
 					}
 					//showText(this.name+", "+this.hairPick+", "+this.headPick,x.x,x.y,10)
 				}
-			}
+			// }
 			if(AABBCollision(this.x,this.y,this.w,this.h,mouse.x,mouse.y,0,0)&&cankill&&!this.trapdooring){
 				cankill = false;
 				this.fuck = true;
