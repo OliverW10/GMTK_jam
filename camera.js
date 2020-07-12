@@ -1,15 +1,17 @@
 class Camera{
-    constructor(){
-        this.locations = [[0.45,0.85,0.08,0.15,1],[0.34,0.6,0.3,0.25,2],[0.40,0.35,0.13,0.25,3],[0.64,0.75,0.2,0.15,4],[0.64,0.35,0.1,0.35,5],[0.24,0.65,0.1,0.15,6]];
+    constructor(rect){
+        this.locations = [[0.45,0.85,0.08,0.15,1],[0.34,0.6,0.3,0.25,2],[0.40,0.35,0.13,0.25,3],[0.64,0.65,0.2,0.15,4],[0.531,0.39,0.1,0.15,5],[0.24,0.65,0.1,0.15,6]];
         this.currentLocation = 1;
         this.state = "overview";
         this.bg = new image("assets/room"+this.currentLocation+".png");
+        this.returnsprite = new spriteSheet("assets/return.png",32,16,30,rect[0]+rect[2]*0,rect[1]+rect[3]*0.86,64,32);
+        this.returnsprite.addState("idle",1,2);
     }
     draw(rect){
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"white",1);
         if(this.state == "overview"){
             for(var x of this.locations){
-                var temp = [rect[0]+rect[2]*x[0],rect[1]+rect[3]*x[1],rect[2]*x[2],rect[3]*x[3]];
+                var temp = [rect[0]+rect[2]*x[0],rect[1]+rect[3]*x[1]-30,rect[2]*x[2],rect[3]*x[3]];
                 if(AABBCollision(temp[0],temp[1],temp[2],temp[3],mouse.x,mouse.y,0,0)){
                     drawRect(temp[0],temp[1],temp[2],temp[3],"black",1,"gray",1);
                     if(mouse.button.left){
@@ -31,6 +33,8 @@ class Camera{
         drawRect(rect[0],rect[1],rect[2],rect[3],"black",1,"rgba(50, 50, 200, 0.3)",1);
         if(this.state == "inspect"){
             showText("Room #"+this.currentLocation,rect[0]+rect[2]*0.11,rect[1]+rect[3]*0.07,20,"white")
+            this.returnsprite.frameCalc(1);
+            this.returnsprite.draw();
         }
     }
 }

@@ -29,7 +29,12 @@ var doors = [ //[x, y, w, h, roomItLeadsTo, tpx, tpy, room, restricted] x,y,w,h 
 	[0.45,0.95,0.1,0.05,1,0.5,0.1,2],
 	[0,0.45,0.05,0.1,6,0.75,0.45,2],
 	[0.95,0.45,0.05,0.1,2,0,0.45,6],
-	[]
+	[0.95,0.45,0.05,0.1,4,0,0.45,2],
+	[0,0.45,0.05,0.1,2,0,0.45,4],
+	[0.45,0.95,0.1,0.05,2,0.5,0.1,3],
+	[0.95,0.45,0.05,0.1,5,0,0.45,3],
+	[0,0.45,0.05,0.1,3,0.95,0.45,5],
+	[0.45,0,0.1,0.05,3,0.5,0.6,2],
 ]
 
 class Person{
@@ -114,14 +119,13 @@ class Person{
 		for(var x of this.walls){
 			drawRect(x[0],x[1],x[2],x[3],"blue",1,"black",1)
 		}
-		*/
-		
 		for(var x of doors){
 			if(x[7]==moniter.currentLocation){
 				drawRect(this.rect[0]+this.rect[2]*x[0],this.rect[1]+this.rect[3]*x[1],x[2]*this.rect[2],this.rect[3]*x[3],"red",0,"",1);		
 			}
 		}
-		showText(Math.round(this.timer),this.x,this.y,10);
+		*/
+		//showText(Math.round(this.timer),this.x,this.y,10);
 	}
 	update(){
 		
